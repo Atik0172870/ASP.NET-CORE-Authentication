@@ -1,0 +1,67 @@
+﻿@model EmployeeManagement.ViewModel.HomeEmployeeViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Employee Details";
+    var image = "~/images/" + (Model.Employee.Photo ?? "noimage.jpg");
+}
+
+
+
+
+
+    <div class="card-deck">
+        <div class="card m-3">
+            <div class="card-header text-center badge badge-info">
+                <h4>@Model.Employee.Name</h4>
+            </div>
+            <img class="card-img-top" src="@image" asp-append-version="true" />
+
+            <div class="text-center">
+                <div>
+                    <label>
+                        ID:
+                    </label>
+
+                    @Model.Employee.Id
+                </div>
+                <div>
+                    <label>
+                        Email:
+                    </label>
+                    @Model.Employee.Email
+                </div>
+                <div>
+                    <label>
+                        Department:
+                    </label>
+                    @Model.Employee.Department
+
+
+                </div>
+            </div>
+            <div class="card-footer text-center">
+ 
+                
+                        <a href="/Home/Index" class="btn btn-primary">
+                            <i class="fa fa-undo" aria-hidden="true"></i>
+                            Back
+                        </a>
+                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Employee.Id" class="btn btn-primary">
+                            <i class="fa fa-edit"></i>
+                            Edit
+                        </a>
+                        <a asp-controller="Home" asp-action="Delete" asp-route-id="@Model.Employee.Id" class="btn btn-danger">
+                            <i class="fa fa-trash-o"></i>
+                            Delete
+
+                        </a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+

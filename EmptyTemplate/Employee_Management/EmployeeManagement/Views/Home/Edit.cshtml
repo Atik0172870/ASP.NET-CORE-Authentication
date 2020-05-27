@@ -1,0 +1,77 @@
+﻿
+@model EmployeeCreateView
+
+@inject IEmployeeRepository _IEmployeeRepository;
+@{
+    ViewBag.Title = "Edit Employee";
+    var image = "~/images/" + (Model.Photo ?? "noimage.jpg");
+}
+
+<form enctype="multipart/form-data" asp-controller="Home" asp-action="Edit" method="post" class="mt-3">
+
+    <div style="border:1px solid black">
+        <input hidden asp-for="existingPhotoPath" />
+        <div class="m-2">
+            <div class="form-group row">
+                <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Department" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <select asp-for="Department" asp-items="Html.GetEnumSelectList<Department>()" class="custom-select mr-sm-2">
+                        <option value="">Chose one...</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-group row m-1">
+                <label asp-for="photoFile" class="col-sm-2 col-form-label">Photo</label>
+                <div class="col-sm-10">
+                    <input asp-for="photoFile" class="form-control custom-file-input" />
+                    <label class="custom-file-label">Chose to change File...</label>
+                </div>
+            </div>
+            <div class="form-group row col-sm-4 offset-4">
+                <img class="imgthumbnail" src="@image" asp-append-version="true" />
+            </div>
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div>
+                <button type="submit" class="btn btn-primary" style="width:auto">
+                    <i class="fa fa-wrench" aria-hidden="true"></i>
+                    Update
+                </button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-danger">
+                    <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                    Cancel
+
+                </a>
+                
+            </div>
+
+        </div>
+    </div>
+    @section Scripts{
+        <script>
+            $(Document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName)
+                    // alert(fileName)
+                })
+            })
+        </script>
+    }
+
+</form>

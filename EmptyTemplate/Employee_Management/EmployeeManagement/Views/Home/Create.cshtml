@@ -1,0 +1,73 @@
+﻿@model EmployeeCreateView
+
+@inject IEmployeeRepository _IEmployeeRepository;
+@{
+    ViewBag.Title = "Create Employee";
+}
+
+<form enctype="multipart/form-data" asp-controller="Home" asp-action="Create" method="post" class="mt-3">
+
+    <div style="border:1px solid black">
+
+        <div class="m-2">
+            <div class="form-group row">
+                <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Department" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <select asp-for="Department" asp-items="Html.GetEnumSelectList<Department>()" class="custom-select mr-sm-2">
+                        <option value="">Chose one...</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-group row m-1">
+                <label asp-for="photoFile" class="col-sm-2 col-form-label">Photo</label>
+                <div class="col-sm-10">
+                    <input asp-for="photoFile" class="form-control custom-file-input" />
+                    <label class="custom-file-label">Chose File...</label>
+                </div>
+            </div>
+
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                    Create
+                </button>
+            </div>
+
+
+            <div class=" btn btn-primary text-center" style="width:200px;float:right">
+                Total Count Employee <span class="badge badge-light">@_IEmployeeRepository.GetAllEmployee().Count()</span>
+
+            </div>
+        </div>
+    </div>
+
+    @section Scripts{
+        <script>
+            $(Document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName)
+                    // alert(fileName)
+                })
+            })
+        </script>
+    }
+
+</form>
